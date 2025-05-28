@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.mall.tiny.modules.pms.dao.PmsStorageDao">
+
+    <resultMap id="storageListMap" type="com.macro.mall.tiny.modules.pms.dto.PmsStorageDetail" extends="com.macro.mall.tiny.modules.pms.mapper.PmsStorageMapper.BaseResultMap">
+        <result property="supplyName" column="supply_name" jdbcType="VARCHAR"/>
+        <result property="supplyDescription" column="supply_description" jdbcType="VARCHAR"/>
+        <result property="operatorName" column="admin_nick_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getList" resultMap="storageListMap">
+        SELECT
+            ps.*,
+            psu.name as supply_name,
+            psu.description as supply_description,
+            ua.nick_name as admin_nick_name
+        FROM
+            pms_storage ps
+                LEFT JOIN pms_supply psu ON psu.id = ps.supply_id
+        LEFT JOIN ums_admin ua ON ua.id = ps.operator_id
+        <where>
+            <if test="supply_name != null and supply_name != ''">
+                AND psu.name like CONCAT('%', #{supply_name}, '%')
+            </if>
+            <if test="type != null and type != ''">
+                AND ps.type = #{type}
+            </if>
+        </where>
+        ORDER BY ps.id desc
+    </select>
+</mapper>

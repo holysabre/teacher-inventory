@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.mall.tiny.modules.pms.mapper.PmsInventoryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.macro.mall.tiny.modules.pms.model.PmsInventory">
+        <id column="id" property="id" />
+        <result column="supply_id" property="supplyId" />
+        <result column="qty" property="qty" />
+        <result column="last_update_time" property="lastUpdateTime" />
+    </resultMap>
+
+</mapper>

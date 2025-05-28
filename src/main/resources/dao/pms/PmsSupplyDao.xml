@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.mall.tiny.modules.pms.dao.PmsSupplyDao">
+
+    <resultMap id="listWithInventory" type="com.macro.mall.tiny.modules.pms.dto.PmsSupplyWithInventory" extends="com.macro.mall.tiny.modules.pms.mapper.PmsSupplyMapper.BaseResultMap">
+        <result property="qty" column="inventory_qty" jdbcType="INTEGER"/>
+        <result property="lastUpdateTime" column="inventory_last_update_time" />
+    </resultMap>
+    
+    <select id="getListWithInventory" resultMap="listWithInventory">
+        SELECT
+            ps.*,
+            IFNULL(pi.qty, 0) AS inventory_qty,
+            pi.last_update_time as inventory_last_update_time
+        FROM
+            pms_supply ps
+                LEFT JOIN pms_inventory pi ON ps.id = pi.supply_id
+        ORDER BY ps.id
+    </select>
+</mapper>
