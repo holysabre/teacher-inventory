@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.mall.tiny.modules.pms.dao.PmsAdminAssetDao">
+
+    <resultMap id="adminAssetListMap" type="com.macro.mall.tiny.modules.pms.dto.PmsAdminAssetDetail" extends="com.macro.mall.tiny.modules.pms.mapper.PmsAdminAssetMapper.BaseResultMap">
+        <result property="supplyName" column="supply_name" jdbcType="VARCHAR"/>
+        <result property="supplySpec" column="supply_spec" jdbcType="VARCHAR"/>
+        <result property="supplyDescription" column="supply_description" jdbcType="VARCHAR"/>
+        <result property="supplyTypeName" column="supply_type_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getList" resultMap="adminAssetListMap">
+        SELECT
+            paa.*,
+            psu.name as supply_name,
+            psu.spec as supply_spec,
+            psu.description as supply_description,
+            pst.name as supply_type_name
+        FROM
+            pms_admin_asset paa
+        LEFT JOIN pms_supply psu ON psu.id = paa.supply_id
+        LEFT JOIN pms_supply_type pst ON pst.id = psu.type_id
+        <where>
+            AND paa.admin_id = #{admin_id}
+            <if test="supply_name != null and supply_name != ''">
+                AND psu.name like CONCAT('%', #{supply_name}, '%')
+            </if>
+            <if test="create_time != null and create_time != ''">
+                AND DATE(paa.create_time) = DATE(#{create_time})
+            </if>
+        </where>
+        ORDER BY paa.id desc
+    </select>
+</mapper>
