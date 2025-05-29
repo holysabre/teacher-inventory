@@ -2,10 +2,8 @@ package com.macro.mall.tiny.modules.pms.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.pagehelper.PageHelper;
 import com.macro.mall.tiny.common.exception.Asserts;
 import com.macro.mall.tiny.modules.pms.dao.PmsSupplyOperationDao;
-import com.macro.mall.tiny.modules.pms.dto.PmsStorageDetail;
 import com.macro.mall.tiny.modules.pms.dto.PmsSupplyApplyParam;
 import com.macro.mall.tiny.modules.pms.dto.PmsSupplyOperationDetail;
 import com.macro.mall.tiny.modules.pms.mapper.PmsAdminAssetMapper;
@@ -20,8 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -48,13 +45,13 @@ public class PmsSupplyOperationServiceImpl extends ServiceImpl<PmsSupplyOperatio
 
     @Override
     public Page<PmsSupplyOperationDetail> list(String supplyName, String applyName, String type, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<PmsSupplyOperationDetail> operationDetailList = supplyOperationDao.getList(supplyName,applyName,type);
-
+        Map<String, Object> params = new HashMap<>();
+        params.put("supplyName", supplyName);
+        params.put("applyName", applyName);
+        params.put("type", type);
         Page<PmsSupplyOperationDetail> page = new Page<>(pageNum, pageSize);
-        page.setRecords(operationDetailList);
 
-        return page;
+        return (Page<PmsSupplyOperationDetail>) supplyOperationDao.getPageList(page,params);
     }
 
     @Override

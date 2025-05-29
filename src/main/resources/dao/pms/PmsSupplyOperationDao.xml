@@ -7,23 +7,23 @@
         <result property="applyName" column="apply_name" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getList" resultMap="supplyOperationListMap">
+    <select id="getPageList" resultMap="supplyOperationListMap">
         SELECT
-            pso.*,
-            psu.name as supply_name,
-            ua.nick_name as apply_name
+        pso.*,
+        psu.name as supply_name,
+        ua.nick_name as apply_name
         FROM
-            pms_supply_operation pso
+        pms_supply_operation pso
         LEFT JOIN pms_supply psu ON psu.id = pso.supply_id
         LEFT JOIN ums_admin ua ON ua.id = pso.admin_id
         <where>
-            <if test="supply_name != null and supply_name != ''">
+            <if test="param.supply_name != null and param.supply_name != ''">
                 AND psu.name like CONCAT('%', #{supply_name}, '%')
             </if>
-            <if test="apply_name != null and apply_name != ''">
+            <if test="param.apply_name != null and param.apply_name != ''">
                 AND ua.nick_name like CONCAT('%', #{apply_name}, '%')
             </if>
-            <if test="type != null and type != ''">
+            <if test="param.type != null and param.type != ''">
                 AND pso.operation_type = #{type}
             </if>
         </where>

@@ -1,10 +1,8 @@
 package com.macro.mall.tiny.modules.pms.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.pagehelper.PageHelper;
 import com.macro.mall.tiny.modules.pms.dao.PmsAdminAssetDao;
 import com.macro.mall.tiny.modules.pms.dto.PmsAdminAssetDetail;
-import com.macro.mall.tiny.modules.pms.dto.PmsSupplyWithInventory;
 import com.macro.mall.tiny.modules.pms.model.PmsAdminAsset;
 import com.macro.mall.tiny.modules.pms.mapper.PmsAdminAssetMapper;
 import com.macro.mall.tiny.modules.pms.service.PmsAdminAssetService;
@@ -13,8 +11,6 @@ import com.macro.mall.tiny.modules.ums.model.UmsAdmin;
 import com.macro.mall.tiny.modules.ums.service.UmsAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * <p>
@@ -33,11 +29,8 @@ public class PmsAdminAssetServiceImpl extends ServiceImpl<PmsAdminAssetMapper, P
 
     @Override
     public Page<PmsAdminAssetDetail> list(String keyword, String createTime, Integer pageSize, Integer pageNum) {
-        PageHelper.startPage(pageNum, pageSize);
         UmsAdmin admin = adminService.getCurrentAdmin();
-        List<PmsAdminAssetDetail> assetList = adminAssetDao.getList(admin.getId(),keyword,createTime);
-        Page<PmsAdminAssetDetail> page = new Page<>();
-        page.setRecords(assetList);
-        return page;
+        Page<PmsAdminAssetDetail> page = new Page<>(pageNum, pageSize);
+        return (Page<PmsAdminAssetDetail>) adminAssetDao.getList(page,admin.getId(),keyword,createTime);
     }
 }

@@ -23,8 +23,6 @@
         <springfox-swagger.version>3.0.0</springfox-swagger.version>
         <velocity.version>2.3</velocity.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
-        <pagehelper-starter.version>1.4.5</pagehelper-starter.version>
-        <pagehelper.version>5.3.2</pagehelper.version>
     </properties>
 
     <parent>
@@ -120,18 +118,6 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
             <version>${mybatis-plus.version}</version>
-        </dependency>
-        <!--MyBatis分页插件starter-->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>${pagehelper-starter.version}</version>
-        </dependency>
-        <!--MyBatis分页插件-->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>${pagehelper.version}</version>
         </dependency>
         <!--Velocity模板引擎-->
         <dependency>

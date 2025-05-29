@@ -1,9 +1,8 @@
 package com.macro.mall.tiny.modules.pms.dao;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.macro.mall.tiny.modules.pms.dto.PmsStorageDetail;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 /**
  * @auther Pange
@@ -12,5 +11,8 @@ import java.util.List;
  */
 public interface PmsStorageDao {
 
-    List<PmsStorageDetail> getList(@Param("supply_name") String supplyName, @Param("type") String type);
+    IPage<PmsStorageDetail> getList(
+            IPage<PmsStorageDetail> page,
+            @Param("supply_name") String supplyName,
+            @Param("type") String type);
 }

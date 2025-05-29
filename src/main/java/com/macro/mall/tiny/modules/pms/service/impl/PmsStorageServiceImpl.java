@@ -1,7 +1,6 @@
 package com.macro.mall.tiny.modules.pms.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.pagehelper.PageHelper;
 import com.macro.mall.tiny.common.exception.Asserts;
 import com.macro.mall.tiny.modules.pms.dao.PmsStorageDao;
 import com.macro.mall.tiny.modules.pms.dto.PmsStorageDetail;
@@ -16,9 +15,7 @@ import com.macro.mall.tiny.modules.ums.service.UmsAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * <p>
@@ -40,13 +37,8 @@ public class PmsStorageServiceImpl extends ServiceImpl<PmsStorageMapper, PmsStor
 
     @Override
     public Page<PmsStorageDetail> list(String supplyName, String type, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<PmsStorageDetail> storageDetailList = storageDao.getList(supplyName,type);
-
         Page<PmsStorageDetail> page = new Page<>(pageNum, pageSize);
-        page.setRecords(storageDetailList);
-
-        return page;
+        return (Page<PmsStorageDetail>) storageDao.getList(page,supplyName,type);
     }
 
     @Override

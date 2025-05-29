@@ -5,7 +5,7 @@ spring:
   application:
     name: teacher-inventory
   profiles:
-    active: prod
+    active: dev
 #  main:
 #    allow-circular-references: true
   mvc:
